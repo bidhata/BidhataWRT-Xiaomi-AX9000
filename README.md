@@ -1,6 +1,6 @@
-# 📡 bidhatawrt-boardbin-qcn9074
+# 📡 BidhataWrt for Xiaomi AX9000
 
-> Custom board-2.bin firmware package for Qualcomm QCN9074 WiFi chipset in OpenWrt
+> Custom board-2.bin firmware package for Qualcomm QCN9074 WiFi chipset in OpenWrt and Fan Working as well
 
 [![License: GPL v2](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
 [![OpenWrt](https://img.shields.io/badge/OpenWrt-Compatible-00B5E2?logo=openwrt)](https://openwrt.org/)
@@ -10,14 +10,7 @@
 
 ## 📖 Overview
 
-This OpenWrt package provides a **vendor-specific board-2.bin firmware file** for the Qualcomm QCN9074 WiFi chipset. It seamlessly replaces the default board-2.bin with a custom version optimized for improved compatibility and performance.
-
-### ✨ Key Features
-
-- 🔧 **Easy Integration** - Simple drop-in replacement for default firmware
-- 🚀 **No Compilation Required** - Pure firmware file installation
-- 🔄 **Non-Destructive** - Works alongside existing ath11k packages
-- 🌐 **Universal Compatibility** - Available for all OpenWrt target platforms
+BidhataWRT for Xiaomi AX9000 based on ImmortalWRT with vendor board-2.bin file, QCN9074 160 Mhz working, Fan working including monitoring 
 
 ---
 
@@ -28,7 +21,7 @@ This OpenWrt package provides a **vendor-specific board-2.bin firmware file** fo
 - 📧 Email: [me@krishnendu.com](mailto:me@krishnendu.com)
 - 🌐 Website: [krishnendu.com](https://krishnendu.com)
 - 💻 GitHub: [@bidhata](https://github.com/bidhata)
-- 📦 Repository: [xiaomi_qualcomm_boardbin](https://github.com/bidhata/xiaomi_qualcomm_boardbin)
+- 📦 Repository: [BidhataWRT for AX900](https://github.com/bidhata/BidhataWRT-Xiaomi-AX9000))
 
 ---
 
@@ -37,21 +30,9 @@ This OpenWrt package provides a **vendor-specific board-2.bin firmware file** fo
 ### Prerequisites
 
 - OpenWrt build environment set up
-- Vendor-provided `board-2.bin` file for QCN9074
+- Downloaded bidhatawrt-ax9000.tgz
 
 ### Installation Steps
-
-#### 1️⃣ Copy Package to OpenWrt Buildroot
-
-```bash
-cp -r bidhatawrt-boardbin-qcn9074 /path/to/openwrt/package/firmware/
-```
-
-#### 2️⃣ Add Your Vendor board-2.bin File
-
-> [!IMPORTANT]
-> **Critical Step:** Replace the placeholder with your actual vendor-provided firmware file!
-
 ```bash
 cd /path/to/openwrt/package/firmware/bidhatawrt-boardbin-qcn9074
 
@@ -60,163 +41,30 @@ rm files/lib/firmware/ath11k/QCN9074/hw1.0/board-2.bin
 
 # Copy your vendor file
 cp /path/to/your/vendor/board-2.bin files/lib/firmware/ath11k/QCN9074/hw1.0/
-```
 
-#### 3️⃣ Configure Package in menuconfig
-
-```bash
-cd /path/to/openwrt
-make menuconfig
-```
-
-**Navigation:**
-1. Go to **Firmware** section
-2. ✅ **Keep** existing `ath11k-firmware-*` packages selected
-3. ✅ **Select** `<*> bidhatawrt-boardbin-qcn9074`
-4. Save and exit
 
 #### 4️⃣ Build Firmware
 
-```bash
-# Build only this package
-make package/bidhatawrt-boardbin-qcn9074/compile V=s
+```bas
 
 # Or build complete firmware
-make -j$(nproc)
+make image PROFILE=xiaomi_ax9000 PACKAGES="ath11k-firmware-ipq8074 automount base-files ca-bundle cpufreq dnsmasq-full dropbear firewall4 fstools kmod-ath11k-ahb kmod-gpio-button-hotplug kmod-leds-gpio kmod-nft-offload kmod-phy-aquantia kmod-qca-nss-dp kmod-usb-dwc3 kmod-usb-dwc3-qcom kmod-usb3 libc libgcc libustream-openssl logd losetup mtd netifd nftables ppp ppp-mod-pppoe procd-ujail uboot-envtools uci uclient-fetch urandom-seed urngd wpad-openssl ipq-wifi-xiaomi_ax9000 kmod-ath11k-pci ath11k-firmware-qcn9074 kmod-ath10k-ct ath10k-firmware-qca9887-ct kmod-hwmon-core kmod-thermal kmod-regmap-i2c kmod-i2c-core kmod-regmap-core kmod-hwmon-emc2305 i2c-tools luci-nginx luci-lua-runtime luci-compat luci-app-upnp sed nano luci-app-ksmbd relayd kmod-tcp-bbr luci-theme-argon alpine-fan-control luci-app-alpine-fan-control -luci-app-attendedsysupgrade" FILES="files"
+
 ```
 
 ---
 
 ## ⚠️ Important Notes
 
-### 🔴 Do NOT Disable ath11k Packages!
 
-> [!WARNING]
-> **Keep the existing ath11k firmware and driver packages selected!**
-
-This package is designed to work **alongside** the standard ath11k packages, not replace them entirely.
-
-**Required packages to keep selected:**
-- ✅ `kmod-ath11k-*` (driver packages)
-- ✅ `ath11k-firmware-qcn9074` (other firmware files)
-- ✅ `bidhatawrt-boardbin-qcn9074` (this package)
-
-**What this package does:**
-- ✔️ Replaces **only** the `board-2.bin` file
-- ✔️ Keeps all other firmware files intact
-- ✔️ Preserves WiFi driver functionality
-
-### 📁 Installation Path
-
-The custom firmware file is installed to:
-
-```
-/lib/firmware/ath11k/QCN9074/hw1.0/board-2.bin
-```
-
-This will override the default board-2.bin from the standard ath11k-firmware package.
-
----
-
-## ✅ Verification
+## ✅ Activation
 
 After flashing your compiled firmware to the router:
 
-### Check File Installation
-
-```bash
-# SSH into your router
-ssh root@192.168.1.1
-
-# Verify file exists
-ls -lh /lib/firmware/ath11k/QCN9074/hw1.0/board-2.bin
-
-# Check file size/checksum
-md5sum /lib/firmware/ath11k/QCN9074/hw1.0/board-2.bin
-```
-
-### Verify Firmware Loading
-
-```bash
-# Check kernel messages for ath11k
-dmesg | grep ath11k
-
-# Expected output should show firmware loading successfully
-# Look for: "ath11k ... board-2.bin found"
-```
+REBOOT once.
 
 ---
 
-## 🔧 Troubleshooting
-
-### 📶 WiFi Not Working After Installation
-
-**Possible causes:**
-
-1. **Missing ath11k packages**
-   - ✅ Solution: Ensure you kept `ath11k-firmware-*` and `kmod-ath11k-*` selected
-
-2. **Incompatible board-2.bin**
-   - ✅ Solution: Verify your vendor firmware file matches your hardware revision
-
-3. **Firmware loading errors**
-   - ✅ Solution: Check `dmesg | grep -i error` for specific error messages
-
-### 📦 Package Not Appearing in menuconfig
-
-**Try these steps:**
-
-```bash
-# Update package feeds
-./scripts/feeds update -a && ./scripts/feeds install -a
-
-# Refresh package symlinks
-make package/symlinks
-
-# Clean and retry
-make clean
-make menuconfig
-```
-
-**Verify package location:**
-```bash
-ls -la package/firmware/bidhatawrt-boardbin-qcn9074/Makefile
-```
-
-### 🛠️ Build Errors
-
-Run with **verbose output** to see detailed error messages:
-
-```bash
-make package/bidhatawrt-boardbin-qcn9074/compile V=s
-```
-
-**Common issues:**
-
-| Issue | Solution |
-|-------|----------|
-| `board-2.bin not found` | Ensure you copied your vendor file to `files/lib/firmware/...` |
-| `No rule to make target` | Check Makefile syntax and indentation (use tabs, not spaces) |
-| `Permission denied` | Verify file permissions: `chmod 644 files/lib/firmware/.../board-2.bin` |
-
----
-
-## 📂 Package Structure
-
-```
-bidhatawrt-boardbin-qcn9074/
-├── 📄 Makefile                      # OpenWrt package build instructions
-├── 📖 README.md                     # This file
-└── 📁 files/
-    └── 📁 lib/
-        └── 📁 firmware/
-            └── 📁 ath11k/
-                └── 📁 QCN9074/
-                    └── 📁 hw1.0/
-                        └── 🔧 board-2.bin    # Your vendor firmware file
-```
-
----
 
 ## 📄 License
 
@@ -240,15 +88,7 @@ Contributions are welcome! Please feel free to submit issues and pull requests.
 
 ---
 
-## 📞 Support
-
-### Need Help?
-
-- 🐛 **Bug Reports:** [GitHub Issues](https://github.com/bidhata/xiaomi_qualcomm_boardbin/issues)
-- 📧 **Email:** [me@krishnendu.com](mailto:me@krishnendu.com)
-- 💬 **Discussions:** [GitHub Discussions](https://github.com/bidhata/xiaomi_qualcomm_boardbin/discussions)
-
----
+--
 
 ## 🔗 Related Links
 
@@ -266,3 +106,4 @@ Contributions are welcome! Please feel free to submit issues and pull requests.
 ⭐ Star this repository if you find it helpful!
 
 </div>
+
