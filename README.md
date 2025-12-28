@@ -45,7 +45,7 @@ cp /path/to/your/vendor/board-2.bin files/lib/firmware/ath11k/QCN9074/hw1.0/
 
 #### 4️⃣ Build Firmware
 
-```bas
+```bash
 
 # Or build complete firmware
 make image PROFILE=xiaomi_ax9000 PACKAGES="ath11k-firmware-ipq8074 automount base-files ca-bundle cpufreq dnsmasq-full dropbear firewall4 fstools kmod-ath11k-ahb kmod-gpio-button-hotplug kmod-leds-gpio kmod-nft-offload kmod-phy-aquantia kmod-qca-nss-dp kmod-usb-dwc3 kmod-usb-dwc3-qcom kmod-usb3 libc libgcc libustream-openssl logd losetup mtd netifd nftables ppp ppp-mod-pppoe procd-ujail uboot-envtools uci uclient-fetch urandom-seed urngd wpad-openssl ipq-wifi-xiaomi_ax9000 kmod-ath11k-pci ath11k-firmware-qcn9074 kmod-ath10k-ct ath10k-firmware-qca9887-ct kmod-hwmon-core kmod-thermal kmod-regmap-i2c kmod-i2c-core kmod-regmap-core kmod-hwmon-emc2305 i2c-tools luci-nginx luci-lua-runtime luci-compat luci-app-upnp sed nano luci-app-ksmbd relayd kmod-tcp-bbr luci-theme-argon alpine-fan-control luci-app-alpine-fan-control -luci-app-attendedsysupgrade" FILES="files"
@@ -106,4 +106,5 @@ Contributions are welcome! Please feel free to submit issues and pull requests.
 ⭐ Star this repository if you find it helpful!
 
 </div>
+
 
